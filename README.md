@@ -6,4 +6,16 @@ Functionalities should be similar to `aka.ms` 👌
 
 ## API Server
 
+Endpoints
+
+### GET requests
+
+- [x] `/urls`: Get all URLs
+
+### POST requests
+
+### DELETE requests
+
+### PUT requests
+
 ## Database
