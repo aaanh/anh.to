@@ -31,10 +31,27 @@ var examples = []url{
 // @Tags GET
 // @Accept json
 // @Produce json
-// @Success 200 {object} getAllUrls
+// @Success 200 {[]object} getAllUrls
 // @Router /urls [get]
 func getAllUrls(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, examples)
+}
+
+// @Summary Get long URL from short URL query param
+// @Schemes
+// @Description Query the database and forward all URL pairs to the requester
+// @Tags GET
+// @Accept json
+// @Produce json
+// @Success 200 {object} getAllUrls
+// @Router /url/shortUrl [get]
+func getLongUrl(c *gin.Context, longUrl string) {
+	for _, a := range examples {
+		if a.LongUrl == longUrl {
+			c.IndentedJSON(http.StatusOK, a)
+		}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Invalid URL"})
 }
 
 func main() {
@@ -44,9 +61,9 @@ func main() {
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	v1 := router.Group("/api/v1")
 	{
-		eg := v1.Group("/urls")
+		path_group := v1.Group("/urls")
 		{
-			eg.GET("/urls", getAllUrls)
+			path_group.GET("/urls", getAllUrls)
 		}
 	}
 
