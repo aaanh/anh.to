@@ -45,10 +45,12 @@ func getAllUrls(c *gin.Context) {
 // @Produce json
 // @Success 200 {object} getAllUrls
 // @Router /url/shortUrl [get]
-func getLongUrl(c *gin.Context, longUrl string) {
+func getLongUrl(c *gin.Context) {
+	shortUrl := c.Param("shortUrl")
 	for _, a := range examples {
-		if a.LongUrl == longUrl {
-			c.IndentedJSON(http.StatusOK, a)
+		if a.ShortUrl == shortUrl {
+			c.IndentedJSON(http.StatusOK, a.LongUrl)
+			return
 		}
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Invalid URL"})
@@ -68,6 +70,9 @@ func main() {
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
+	v1.GET("/urls", getAllUrls)
+	v1.GET("/url/:shortUrl", getLongUrl)
 
 	router.Run(":8080")
 }
