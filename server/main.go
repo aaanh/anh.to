@@ -49,7 +49,7 @@ func getLongUrl(c *gin.Context) {
 	shortUrl := c.Param("shortUrl")
 	for _, a := range examples {
 		if a.ShortUrl == shortUrl {
-			c.IndentedJSON(http.StatusOK, a.LongUrl)
+			c.IndentedJSON(http.StatusOK, a)
 			return
 		}
 	}
