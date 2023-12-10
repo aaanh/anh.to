@@ -1,0 +1,20 @@
+{
+  "redirections": [
+    {
+      "from": "nohello",
+      "to": "https://sbmueller.github.io/nohello/"
+    },
+    {
+      "from": "gh",
+      "to": "https://github.com/aaanh"
+    },
+    {
+      "from": "home",
+      "to": "https://aaanh.com"
+    },
+    {
+      "from": "linkedin",
+      "to": "https://linkedin.com/in/aaanh"
+    }
+  ]
+}
