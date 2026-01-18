@@ -1,19 +1,21 @@
 {
-	"name": "anh.to",
+	"name": "anh.to-monorepo",
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev",
-		"test": "vitest",
-		"cf-typegen": "wrangler types"
+		"build": "turbo build",
+		"dev": "turbo dev",
+		"deploy": "turbo deploy",
+		"test": "turbo test",
+		"format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+		"lint": "turbo lint"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.8.19",
-		"@cloudflare/workers-types": "^4.20250117.0",
-		"typescript": "^5.5.2",
-		"vitest": "~3.2.0",
-		"wrangler": "^4.59.2"
+		"prettier": "^3.4.2",
+		"turbo": "^2.3.3"
+	},
+	"packageManager": "pnpm@9.15.0",
+	"engines": {
+		"node": ">=18"
 	}
 }
