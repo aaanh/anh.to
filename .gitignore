@@ -10,3 +10,5 @@
 # Binaries with ext
 *.exe
 *.bin
+
+.DS_Store
