@@ -4,10 +4,13 @@
 // itty-router: https://www.npmjs.com/package/itty-router
 // Hono: https://www.npmjs.com/package/hono
 
-class Router {
-  routes = [];
+type RouteMatcher = (request: Request) => { params: Record<string, string> } | undefined;
+type RouteHandler = (args: { params?: Record<string, string>; request: Request }) => Response | Promise<Response>;
 
-  handle(request) {
+class Router {
+  routes: Array<[RouteMatcher, RouteHandler]> = [];
+
+  handle(request: Request): Response | Promise<Response> | undefined {
     for (const route of this.routes) {
       const match = route[0](request);
       if (match) {
@@ -16,14 +19,14 @@ class Router {
     }
     const match = this.routes.find(([matcher]) => matcher(request));
     if (match) {
-      return match[1](request);
+      return match[1]({ request });
     }
   }
 
-  register(handler, path, method) {
+  register(handler: RouteHandler, path: string, method?: string): void {
     const urlPattern = new URLPattern({ pathname: path });
     this.routes.push([
-      (request) => {
+      (request: Request) => {
         if (method === undefined || request.method.toLowerCase() === method) {
           const match = urlPattern.exec({
             pathname: new URL(request.url).pathname,
@@ -37,29 +40,29 @@ class Router {
     ]);
   }
 
-  options(path, handler) {
+  options(path: string, handler: RouteHandler): void {
     this.register(handler, path, "options");
   }
-  head(path, handler) {
+  head(path: string, handler: RouteHandler): void {
     this.register(handler, path, "head");
   }
-  get(path, handler) {
+  get(path: string, handler: RouteHandler): void {
     this.register(handler, path, "get");
   }
-  post(path, handler) {
+  post(path: string, handler: RouteHandler): void {
     this.register(handler, path, "post");
   }
-  put(path, handler) {
+  put(path: string, handler: RouteHandler): void {
     this.register(handler, path, "put");
   }
-  patch(path, handler) {
+  patch(path: string, handler: RouteHandler): void {
     this.register(handler, path, "patch");
   }
-  delete(path, handler) {
+  delete(path: string, handler: RouteHandler): void {
     this.register(handler, path, "delete");
   }
 
-  all(path, handler) {
+  all(path: string, handler: RouteHandler): void {
     this.register(handler, path);
   }
 }
@@ -74,7 +77,7 @@ router.get("/api/todos", () => new Response("Todos Index!"));
 // GET item
 router.get(
   "/api/todos/:id",
-  ({ params }) => new Response(`Todo #${params.id}`)
+  ({ params }) => new Response(`Todo #${params?.id}`)
 );
 
 // POST to the collection (we'll use async here)

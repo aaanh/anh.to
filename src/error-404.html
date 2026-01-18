@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>404 - Link Not Found | Anh's URL Shortener</title>
+    <meta name="description" content="A simple private URL shortener using Cloudflare Workers and KV."/>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+      
+      .animate-in {
+        animation: fadeIn 0.6s ease-out forwards;
+      }
+      
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+      
+      .gradient-text {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    </style>
+  </head>
+  <body class="bg-black text-white font-sans antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center p-6 md:p-8">
+      <div class="max-w-2xl w-full space-y-8 animate-in">
+        
+        <!-- Header -->
+        <div class="text-center space-y-4">
+          <div class="float inline-block">
+            <i data-lucide="search-x" class="w-24 h-24 text-green-400"></i>
+          </div>
+          <h1 class="text-5xl md:text-6xl font-bold gradient-text">
+            Link Not Found
+          </h1>
+          <div class="inline-block px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-none">
+            <code class="text-green-300 font-mono text-sm">HTTP/418 - I'm a teapot</code>
+          </div>
+        </div>
+
+        <!-- Error Details -->
+        <div class="bg-white/5 backdrop-blur-sm rounded-none p-6 md:p-8 border border-white/10 space-y-4">
+          <p class="text-gray-300 text-lg">
+            The shortened URL you're looking for doesn't exist in the database.
+          </p>
+          
+          <div class="bg-black/50 rounded-none p-4 border border-white/10">
+            <p class="text-sm text-gray-400 mb-2">Requested path:</p>
+            <code class="text-green-400 font-mono text-base break-all">
+              {{KEY_PATH}}
+            </code>
+          </div>
+
+          <div class="pt-2">
+            <p class="text-gray-400">
+              Try a working example: 
+              <a class="text-green-400 hover:text-green-300 underline decoration-green-400/30 hover:decoration-green-300 underline-offset-4 transition-colors font-medium" 
+                 href="https://anh.to/nohello">
+                anh.to/nohello
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="flex flex-wrap gap-3 justify-center">
+          <a href="https://aaanh.com" 
+             class="group px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-none transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg hover:shadow-green-500/20">
+            <span class="flex items-center gap-2">
+              <i data-lucide="home" class="w-5 h-5"></i>
+              <span class="font-medium">Homepage</span>
+            </span>
+          </a>
+          
+          <a href="https://github.com/aaanh" 
+             class="group px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-none transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg hover:shadow-green-500/20">
+            <span class="flex items-center gap-2">
+              <i data-lucide="github" class="w-5 h-5"></i>
+              <span class="font-medium">GitHub</span>
+            </span>
+          </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-gray-500 text-sm pt-4">
+          <!-- <p>Powered by Cloudflare Workers + KV</p> -->
+        </div>
+      </div>
+    </div>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>
